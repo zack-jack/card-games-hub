@@ -1,26 +1,15 @@
-import Link from 'next/link';
 import type { AppProps } from 'next/app';
+import AppHeader from '../components/AppHeader';
+import Layout from '../components/Layout';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/blackjack">
-              <a>Blackjack</a>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+const App = ({ Component, pageProps }: AppProps) => (
+  <div className="flex flex-col items-center min-h-screen">
+    <AppHeader />
+    <Layout>
       <Component {...pageProps} />
-    </div>
-  );
-}
-export default MyApp;
+    </Layout>
+  </div>
+);
+
+export default App;

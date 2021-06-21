@@ -1,17 +1,44 @@
-import Head from 'next/head';
+import HomeCard from '../components/HomeCard';
 
-export default function Home() {
-  return (
-    <div>
-      <Head>
-        <title>Card Games Hub</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <h1>
-          Welcome to Card Games Hub!
-        </h1>
-      </main>
-    </div>
-  );
-}
+const Home = () => (
+  <ul className="flex flex-wrap items-center justify-around p-10">
+    <li className="flex flex-col w-5/12">
+      <HomeCard
+        title="blackjack"
+        href="/blackjack"
+      />
+    </li>
+    <li className="flex flex-col w-5/12">
+      <HomeCard
+        title="coming soon..."
+        href="/"
+      />
+    </li>
+    <li className="flex flex-col w-5/12 mt-6">
+      <HomeCard
+        title="coming soon..."
+        href="/"
+      />
+    </li>
+    <li className="flex flex-col w-5/12 mt-6">
+      <HomeCard
+        title="coming soon..."
+        href="/"
+      />
+    </li>
+    <li className="flex flex-col w-5/12 mt-6">
+      <HomeCard
+        title="coming soon..."
+        href="/"
+      />
+    </li>
+    <li className="flex flex-col w-5/12 mt-6">
+      <HomeCard
+        title="coming soon..."
+        href="/"
+      />
+    </li>
+  </ul>
+);
+
+export default Home;
