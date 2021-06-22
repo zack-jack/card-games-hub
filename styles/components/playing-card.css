@@ -123,3 +123,51 @@
     content: '';
   }
 }
+
+.playing-card--spades,
+.playing-card--clubs {
+  .playing-card__symbol--jack {
+    background: url('../../public/assets/images/jack-black.png');
+  }
+
+  .playing-card__symbol--queen {
+    background: url('../../public/assets/images/queen-black.png');
+  }
+
+  .playing-card__symbol--king {
+    background: url('../../public/assets/images/king-black.png');
+  }
+
+  .playing-card__symbol--jack,
+  .playing-card__symbol--queen,
+  .playing-card__symbol--king {
+    @apply w-full h-full;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+.playing-card--hearts,
+.playing-card--diamonds {
+  .playing-card__symbol--jack {
+    background: url('../../public/assets/images/jack-red.png');
+  }
+
+  .playing-card__symbol--queen {
+    background: url('../../public/assets/images/queen-red.png');
+  }
+
+  .playing-card__symbol--king {
+    background: url('../../public/assets/images/king-red.png');
+  }
+
+  .playing-card__symbol--jack,
+  .playing-card__symbol--queen,
+  .playing-card__symbol--king {
+    @apply w-full h-full;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}

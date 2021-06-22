@@ -6,7 +6,137 @@ const Blackjack = () => (
     <h1>
       Welcome to Blackjack!
     </h1>
-    <div className="flex">
+    <div className="flex flex-wrap">
+      <PlayingCard
+        id={uuid()}
+        rank="A"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="2"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="3"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="4"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="5"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="6"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="7"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="8"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="9"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="10"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="J"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="Q"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="K"
+        suit="spades"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="A"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="2"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="3"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="4"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="5"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="6"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="7"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="8"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="9"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="10"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="J"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="Q"
+        suit="clubs"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="K"
+        suit="clubs"
+      />
       <PlayingCard
         id={uuid()}
         rank="A"
@@ -27,8 +157,6 @@ const Blackjack = () => (
         rank="4"
         suit="hearts"
       />
-    </div>
-    <div className="flex">
       <PlayingCard
         id={uuid()}
         rank="5"
@@ -49,8 +177,6 @@ const Blackjack = () => (
         rank="8"
         suit="hearts"
       />
-    </div>
-    <div className="flex">
       <PlayingCard
         id={uuid()}
         rank="9"
@@ -61,8 +187,6 @@ const Blackjack = () => (
         rank="10"
         suit="hearts"
       />
-    </div>
-    <div className="flex">
       <PlayingCard
         id={uuid()}
         rank="J"
@@ -77,6 +201,71 @@ const Blackjack = () => (
         id={uuid()}
         rank="K"
         suit="hearts"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="A"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="2"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="3"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="4"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="5"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="6"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="7"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="8"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="9"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="10"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="J"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="Q"
+        suit="diamonds"
+      />
+      <PlayingCard
+        id={uuid()}
+        rank="K"
+        suit="diamonds"
       />
       <PlayingCard
         id={uuid()}
