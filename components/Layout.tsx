@@ -20,9 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex-grow w-full bg-gray-100">
-        {children}
-      </main>
+      {children}
     </>
   );
 };

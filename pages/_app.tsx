@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import '../styles/globals.css';
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <div className="flex flex-col items-center min-h-screen">
+  <div className="flex flex-col min-h-screen">
     <AppHeader />
     <Layout>
       <Component {...pageProps} />

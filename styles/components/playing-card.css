@@ -1,0 +1,125 @@
+.playing-card {
+  @apply relative bg-white rounded-md shadow;
+  width: 172px;
+  height: 240px;
+}
+
+.playing-card__corner {
+  @apply absolute flex flex-col;
+
+  &::after {
+    @apply w-4 text-center;
+  }
+
+  &--top {
+    @apply top-1 left-1;
+  }
+
+  &--bot {
+    @apply right-1 bottom-1;
+    transform: rotate(180deg);
+  }
+}
+
+.playing-card__inner {
+  @apply relative flex h-full p-6;
+}
+
+.playing-card__symbol-col {
+  @apply flex flex-col justify-around w-1/3 h-full;
+}
+
+.playing-card__symbol {
+  @apply text-center;
+  width: 35px;
+  height: 35px;
+
+  &::after {
+    font-size: 35px;
+    line-height: 35px;
+  }
+}
+
+.playing-card--spades {
+  @apply text-black;
+
+  .playing-card__corner::after {
+    content: attr(data-rank) ' ♠';
+  }
+
+  .playing-card__symbol::after {
+    content: '♠';
+  }
+}
+
+.playing-card--clubs {
+  @apply text-black;
+
+  .playing-card__corner::after {
+    content: attr(data-rank) ' ♣︎';
+  }
+
+  .playing-card__symbol::after {
+    content: '♣︎';
+  }
+}
+
+.playing-card--hearts {
+  @apply text-red-500;
+
+  .playing-card__corner::after {
+    content: attr(data-rank) ' ♥';
+  }
+
+  .playing-card__symbol::after {
+    content: '♥';
+  }
+}
+
+.playing-card--diamonds {
+  @apply text-red-500;
+
+  .playing-card__corner::after {
+    content: attr(data-rank) ' ♦︎';
+  }
+
+  .playing-card__symbol::after {
+    content: '♦︎';
+  }
+}
+
+.playing-card--joker {
+  @apply text-black;
+
+  .playing-card__corner::after {
+    content: attr(data-rank) ' \2605';
+  }
+
+  .playing-card__symbol::after {
+    content: '\2605';
+  }
+}
+
+.playing-card__symbol--ace,
+.playing-card__symbol--joker {
+  @apply absolute top-1/2 left-1/2;
+  width: 85px;
+  height: 85px;
+  transform: translate(-50%, -50%);
+
+  &::after {
+    font-size: 85px;
+    line-height: 85px;
+  }
+}
+
+.playing-card--spades,
+.playing-card--clubs,
+.playing-card--hearts,
+.playing-card--diamonds {
+  .playing-card__symbol--jack::after,
+  .playing-card__symbol--queen::after,
+  .playing-card__symbol--king::after {
+    content: '';
+  }
+}
