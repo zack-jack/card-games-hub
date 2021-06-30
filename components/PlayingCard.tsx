@@ -18,16 +18,21 @@ const PlayingCard = ({
 
   const faceCards = ['J', 'Q', 'K'];
   const specialRanks = ['A', ...faceCards, 'JOK'];
+  const rankMap: Record<string, string> = {
+    A: 'ace',
+    J: 'jack',
+    Q: 'queen',
+    K: 'king',
+    JOK: 'joker',
+  };
+  const suitMap: Record<string, string> = {
+    C: 'clubs',
+    D: 'diamonds',
+    H: 'hearts',
+    S: 'spades',
+  };
 
   const renderCardCenter = () => {
-    const rankMap: Record<string, string> = {
-      A: 'ace',
-      J: 'jack',
-      Q: 'queen',
-      K: 'king',
-      JOK: 'joker',
-    };
-
     if (specialRanks.indexOf(rank) > -1) {
       return <div className={`playing-card__symbol playing-card__symbol--${rankMap[rank]}`} />;
     }
@@ -56,7 +61,7 @@ const PlayingCard = ({
   };
 
   return (
-    <div className={`playing-card playing-card--${suit} ${className}`}>
+    <div className={`playing-card playing-card--${suitMap[suit]} ${className}`}>
       <span
         data-rank={rank}
         className="playing-card__corner playing-card__corner--top"

@@ -10,12 +10,12 @@ const Blackjack = () => (
       <PlayingCard
         id={uuid()}
         rank="A"
-        suit="spades"
+        suit="S"
       />
       <PlayingCard
         id={uuid()}
         rank="2"
-        suit="spades"
+        suit="C"
         flipped
         className="ml-6"
       />
