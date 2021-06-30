@@ -1,12 +1,12 @@
-import React from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-type LayoutProps = {
-  children: React.ReactNode,
+interface LayoutProps {
+  children: ReactNode,
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: LayoutProps): ReactElement => {
   const router = useRouter();
   const routeName = router.pathname === '/' ? 'home' : router.pathname.split('/')[1];
 

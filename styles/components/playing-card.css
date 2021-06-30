@@ -171,3 +171,8 @@
     background-repeat: no-repeat;
   }
 }
+
+.playing-card--flipped {
+  @apply border-8 border-solid border-white;
+  background-image: url('../../public/assets/images/cardback.gif');
+}

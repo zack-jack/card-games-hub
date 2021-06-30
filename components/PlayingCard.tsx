@@ -1,17 +1,37 @@
-import React from 'react';
+import { ReactElement } from 'react';
 import { cardSymbolsMap } from '../utils/cardSymbolsMap';
 
-type PlayingCardProps = {
+interface PlayingCardProps {
   id: string,
   rank: string,
   suit: string,
+  flipped?: boolean,
+  className?: string,
 }
 
-const PlayingCard: React.FC<PlayingCardProps> = ({ id, rank, suit }) => {
+const PlayingCard = ({
+  id, rank, suit, flipped = false, className = '',
+}: PlayingCardProps): ReactElement => {
+  if (flipped) {
+    return <div className={`playing-card playing-card--flipped ${className}`} />;
+  }
+
   const faceCards = ['J', 'Q', 'K'];
   const specialRanks = ['A', ...faceCards, 'JOK'];
 
-  const renderSymbols = () => {
+  const renderCardCenter = () => {
+    const rankMap: Record<string, string> = {
+      A: 'ace',
+      J: 'jack',
+      Q: 'queen',
+      K: 'king',
+      JOK: 'joker',
+    };
+
+    if (specialRanks.indexOf(rank) > -1) {
+      return <div className={`playing-card__symbol playing-card__symbol--${rankMap[rank]}`} />;
+    }
+
     const symbolColumns = cardSymbolsMap[rank];
 
     return symbolColumns.map((count, i) => {
@@ -35,24 +55,8 @@ const PlayingCard: React.FC<PlayingCardProps> = ({ id, rank, suit }) => {
     });
   };
 
-  const renderCardCenter = () => {
-    const rankMap: Record<string, string> = {
-      A: 'ace',
-      J: 'jack',
-      Q: 'queen',
-      K: 'king',
-      JOK: 'joker',
-    };
-
-    if (specialRanks.indexOf(rank) > -1) {
-      return <div className={`playing-card__symbol playing-card__symbol--${rankMap[rank]}`} />;
-    }
-
-    return renderSymbols();
-  };
-
   return (
-    <div className={`playing-card playing-card--${suit}`}>
+    <div className={`playing-card playing-card--${suit} ${className}`}>
       <span
         data-rank={rank}
         className="playing-card__corner playing-card__corner--top"
