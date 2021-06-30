@@ -1,8 +1,17 @@
 .home-card {
-  @apply bg-white rounded-lg shadow-md border border-dashed border-transparent;
+  @apply flex items-center w-full h-full bg-white rounded-lg shadow-md border border-dashed border-transparent cursor-pointer;
   transition: all .2s ease;
 
   &:hover {
     @apply border-black shadow-lg;
   }
+}
+
+.home-card__link {
+  @apply block w-full h-full px-6 py-4 capitalize;
+}
+
+.home-card.disabled,
+.home-card.disabled > a {
+  @apply cursor-not-allowed;
 }

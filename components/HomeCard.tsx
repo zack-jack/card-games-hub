@@ -4,14 +4,23 @@ import Link from 'next/link';
 interface HomeCardProps {
   title: string,
   href: string,
+  disabled?: boolean,
   className?: string,
 }
 
-const HomeCard = ({ title, href, className = '' }: HomeCardProps): ReactElement => (
-  <div className={`home-card ${className}`}>
-    <Link href={href}>
-      <a className="block px-6 py-4 capitalize">{title}</a>
-    </Link>
+const HomeCard = ({
+  title, href, disabled = false, className = '',
+}: HomeCardProps): ReactElement => (
+  <div className={`home-card ${disabled ? 'disabled' : ''} ${className}`}>
+    {
+      disabled ? (
+        <span className="block px-6 py-4 capitalize">{title}</span>
+      ) : (
+        <Link href={href}>
+          <a className="home-card__link">{title}</a>
+        </Link>
+      )
+    }
   </div>
 );
 
