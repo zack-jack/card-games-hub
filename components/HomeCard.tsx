@@ -14,10 +14,10 @@ const HomeCard = ({
   <div className={`home-card ${disabled ? 'disabled' : ''} ${className}`}>
     {
       disabled ? (
-        <span className="block px-6 py-4 capitalize">{title}</span>
+        <span className="home-card__title block capitalize">{title}</span>
       ) : (
         <Link href={href}>
-          <a className="home-card__link">{title}</a>
+          <a className="home-card__title">{title}</a>
         </Link>
       )
     }

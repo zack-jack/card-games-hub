@@ -1,7 +1,6 @@
 import { Card } from './Card';
-import { DeckConstructor } from './Deck';
 
 export type {
+  // eslint-disable-next-line import/prefer-default-export
   Card,
-  DeckConstructor,
 };

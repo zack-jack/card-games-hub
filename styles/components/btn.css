@@ -1,0 +1,14 @@
+.btn {
+  @apply inline-flex content-center justify-center items-center pl-4 pr-4 bg-white font-bold rounded;
+  min-width: 144px;
+  height: 48px;
+  transition: all .2s ease;
+}
+
+.btn:hover {
+  @apply bg-gray-200;
+}
+
+.btn--disabled {
+  @apply bg-gray-300 cursor-not-allowed;
+}

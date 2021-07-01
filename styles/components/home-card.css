@@ -7,8 +7,8 @@
   }
 }
 
-.home-card__link {
-  @apply block w-full h-full px-6 py-4 capitalize;
+.home-card__title {
+  @apply block w-full h-full px-8 py-6 capitalize;
 }
 
 .home-card.disabled,

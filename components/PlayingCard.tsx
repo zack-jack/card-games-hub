@@ -3,14 +3,14 @@ import { cardSymbolsMap } from '../utils/cardSymbolsMap';
 
 interface PlayingCardProps {
   id: string,
-  rank: string,
-  suit: string,
+  rank?: string,
+  suit?: string,
   flipped?: boolean,
   className?: string,
 }
 
 const PlayingCard = ({
-  id, rank, suit, flipped = false, className = '',
+  id, rank = '', suit = '', flipped = false, className = '',
 }: PlayingCardProps): ReactElement => {
   if (flipped) {
     return <div className={`playing-card playing-card--flipped ${className}`} />;

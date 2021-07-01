@@ -1,47 +1,51 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { Card, DeckConstructor } from '../types';
+import type { Card } from '../types';
 import { getCardProps } from './card';
 
-export default class Deck {
-  cards: Card[] = [];
+/**
+ * Build deck with specified constructor values
+ * @param numDecks {Number} number of decks to include
+ * @param includeJokers {String} deck should contain 2 jokers
+ * @returns {Array} cards
+ */
+export const buildDeck = ({ numDecks = 1, includeJokers = false } = {}): Card[] => {
+  const suits: string[] = ['S', 'D', 'H', 'C'];
+  const ranks: string[] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
-  numDecks: number;
+  const cardHashes = suits.flatMap((suit): string[] => ranks.map((rank): string => rank + suit));
 
-  includeJokers: boolean;
-
-  suits: string[] = ['S', 'D', 'H', 'C'];
-
-  ranks: string[] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-  constructor(options: DeckConstructor = {}) {
-    const { numDecks, includeJokers } = options;
-
-    this.numDecks = numDecks || 1;
-    this.includeJokers = includeJokers || false;
-
-    this.buildDeck();
+  if (includeJokers) {
+    cardHashes.push(...['JOK', 'JOK']);
   }
 
-  /**
-   * Build deck with specified constructor values
-   */
-  buildDeck() {
-    const cardHashes = this.suits
-      .flatMap((suit): string[] => this.ranks.map((rank): string => rank + suit));
+  const cards = cardHashes.map((hash) => {
+    const id = uuidv4();
+    return getCardProps(id, hash);
+  });
 
-    if (this.includeJokers) {
-      cardHashes.push(...['JOK', 'JOK']);
-    }
+  const mergedDecks = Array(numDecks)
+    .fill([...cards])
+    .reduce((a, b) => a.concat(b));
 
-    const cards = cardHashes.map((hash) => {
-      const id = uuidv4();
-      return getCardProps(id, hash);
-    });
+  return mergedDecks;
+};
 
-    const mergedDecks = Array(this.numDecks)
-      .fill([...cards])
-      .reduce((a, b) => a.concat(b));
+/**
+ * Shuffle cards in the deck
+ * @param deck {String} deck to shuffle
+ * @returns {Array} shuffled deck
+ */
+export const shuffleDeck = (deck: Card[]): Card[] => {
+  const shuffled = [...deck];
+  let i = shuffled.length - 1;
 
-    this.cards = [...mergedDecks];
+  while (i > 0) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = temp;
+    i -= 1;
   }
-}
+
+  return shuffled;
+};
