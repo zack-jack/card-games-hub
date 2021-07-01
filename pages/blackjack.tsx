@@ -21,7 +21,11 @@ const Blackjack = () => {
     setDeck(shuffled);
   }, []);
 
-  const deal = (e: MouseEvent) => {
+  const evaluate = (): void => {
+
+  };
+
+  const deal = (e: MouseEvent): void => {
     e.preventDefault();
 
     const shuffled = shuffleDeck(deck);
@@ -36,6 +40,16 @@ const Blackjack = () => {
     setPlayer({ ...player, hand: newPlayerHand });
     setHouse({ ...house, hand: newHouseHand });
     setDeck(shuffled);
+
+    evaluate();
+  };
+
+  const hit = (e: MouseEvent): void => {
+    e.preventDefault();
+  };
+
+  const stand = (e: MouseEvent): void => {
+    e.preventDefault();
   };
 
   return (
@@ -48,8 +62,9 @@ const Blackjack = () => {
               {
                 house.hand.length ? house.hand.map(({ id, rank, suit }, i) => (
                   <Card
-                    key={id}
                     id={id}
+                    key={id}
+                    testId={`house-card-${i + 1}`}
                     rank={rank}
                     suit={suit}
                     flipped={i === 1}
@@ -57,8 +72,15 @@ const Blackjack = () => {
                   />
                 )) : (
                   <>
-                    <Card placeholder />
-                    <Card placeholder className="ml-6" />
+                    <Card
+                      testId="house-placeholder-1"
+                      placeholder
+                    />
+                    <Card
+                      testId="house-placeholder-2"
+                      placeholder
+                      className="ml-6"
+                    />
                   </>
                 )
               }
@@ -69,26 +91,51 @@ const Blackjack = () => {
               {
                 player.hand.length ? player.hand.map(({ id, rank, suit }, i) => (
                   <Card
-                    key={id}
                     id={id}
+                    key={id}
+                    testId={`player-card-${i + 1}`}
                     rank={rank}
                     suit={suit}
                     className={i > 0 ? 'ml-6' : ''}
                   />
                 )) : (
                   <>
-                    <Card placeholder />
-                    <Card placeholder className="ml-6" />
+                    <Card
+                      testId="player-placeholder-1"
+                      placeholder
+                    />
+                    <Card
+                      testId="player-placeholder-2"
+                      placeholder
+                      className="ml-6"
+                    />
                   </>
                 )
               }
             </div>
             <p className="mt-6 text-center">Player</p>
+            <div className="flex justify-center mt-6">
+              <button
+                type="button"
+                className="btn"
+                onClick={hit}
+              >
+                Hit
+              </button>
+              <button
+                type="button"
+                className="btn ml-6"
+                onClick={stand}
+              >
+                Stay
+              </button>
+            </div>
           </section>
         </div>
         <div className="flex flex-col ml-20">
           <Card
             id={uuidv4()}
+            testId="deck"
             flipped
           />
           <button

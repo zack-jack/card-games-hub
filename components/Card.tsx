@@ -8,17 +8,34 @@ interface CardProps {
   flipped?: boolean,
   placeholder?: boolean,
   className?: string,
+  testId: string,
 }
 
 const Card = ({
-  id, rank = '', suit = '', flipped = false, placeholder = false, className = '',
+  id,
+  rank = '',
+  suit = '',
+  flipped = false,
+  placeholder = false,
+  className = '',
+  testId = '',
 }: CardProps): ReactElement => {
   if (placeholder) {
-    return <div className={`card card--placeholder ${className}`} />;
+    return (
+      <div
+        data-testid={testId}
+        className={`card card--placeholder ${className}`}
+      />
+    );
   }
 
   if (flipped) {
-    return <div className={`card card--flipped ${className}`} />;
+    return (
+      <div
+        data-testid={testId}
+        className={`card card--flipped ${className}`}
+      />
+    );
   }
 
   const faceCards = ['J', 'Q', 'K'];
@@ -66,7 +83,10 @@ const Card = ({
   };
 
   return (
-    <div className={`card card--${suitMap[suit]} ${className}`}>
+    <div
+      data-testid={testId}
+      className={`card card--${suitMap[suit]} ${className}`}
+    >
       <span
         data-rank={rank}
         className="card__corner card__corner--top"
