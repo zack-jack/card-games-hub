@@ -1,19 +1,24 @@
 import { ReactElement } from 'react';
 import { cardSymbolsMap } from '../utils/cardSymbolsMap';
 
-interface PlayingCardProps {
-  id: string,
+interface CardProps {
+  id?: string,
   rank?: string,
   suit?: string,
   flipped?: boolean,
+  placeholder?: boolean,
   className?: string,
 }
 
-const PlayingCard = ({
-  id, rank = '', suit = '', flipped = false, className = '',
-}: PlayingCardProps): ReactElement => {
+const Card = ({
+  id, rank = '', suit = '', flipped = false, placeholder = false, className = '',
+}: CardProps): ReactElement => {
+  if (placeholder) {
+    return <div className={`card card--placeholder ${className}`} />;
+  }
+
   if (flipped) {
-    return <div className={`playing-card playing-card--flipped ${className}`} />;
+    return <div className={`card card--flipped ${className}`} />;
   }
 
   const faceCards = ['J', 'Q', 'K'];
@@ -34,7 +39,7 @@ const PlayingCard = ({
 
   const renderCardCenter = () => {
     if (specialRanks.indexOf(rank) > -1) {
-      return <div className={`playing-card__symbol playing-card__symbol--${rankMap[rank]}`} />;
+      return <div className={`card__symbol card__symbol--${rankMap[rank]}`} />;
     }
 
     const symbolColumns = cardSymbolsMap[rank];
@@ -45,13 +50,13 @@ const PlayingCard = ({
       return (
         <div
           key={`${id}-${i + 1}-${count}`}
-          className="playing-card__symbol-col"
+          className="card__symbol-col"
         >
           {
             symbolsArr.map((_, j) => (
               <div
                 key={`${id}-${i + 1}-symbol-${j + 1}`}
-                className="playing-card__symbol"
+                className="card__symbol"
               />
             ))
           }
@@ -61,20 +66,20 @@ const PlayingCard = ({
   };
 
   return (
-    <div className={`playing-card playing-card--${suitMap[suit]} ${className}`}>
+    <div className={`card card--${suitMap[suit]} ${className}`}>
       <span
         data-rank={rank}
-        className="playing-card__corner playing-card__corner--top"
+        className="card__corner card__corner--top"
       />
-      <div className="playing-card__inner">
+      <div className="card__inner">
         {renderCardCenter()}
       </div>
       <span
         data-rank={rank}
-        className="playing-card__corner playing-card__corner--bot"
+        className="card__corner card__corner--bot"
       />
     </div>
   );
 };
 
-export default PlayingCard;
+export default Card;
