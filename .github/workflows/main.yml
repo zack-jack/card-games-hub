@@ -28,4 +28,4 @@ jobs:
       run: npm run lint
 
     - name: Run All Tests
-      run: npm run test
+      run: npm run test:ci
