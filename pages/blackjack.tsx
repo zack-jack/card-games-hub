@@ -1,47 +1,35 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { Card as CardType } from '../types';
-import { buildDeck, shuffleDeck } from '../utils/deck';
+import useBlackjack from '../game-logic/blackjack';
 import Card from '../components/Card';
 
-interface Player {
-  id: string,
-  hand: CardType[],
-  score: number,
-}
-
 const Blackjack = () => {
-  const [deck, setDeck] = useState<CardType[]>([]);
-  const [house, setHouse] = useState<Player>({ id: uuidv4(), hand: [], score: 0 });
-  const [player, setPlayer] = useState<Player>({ id: uuidv4(), hand: [], score: 0 });
+  const {
+    dealerHand,
+    playerHand,
+    playerScore,
+    calculateScore,
+    deal,
+    declareWinner,
+    setDealerScore,
+    setPlayerScore,
+  } = useBlackjack();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const newDeck = buildDeck({ numDecks: 6, includeJokers: false });
-    const shuffled = shuffleDeck(newDeck);
-    setDeck(shuffled);
-  }, []);
+    setDealerScore(calculateScore(dealerHand));
+    setPlayerScore(calculateScore(playerHand));
 
-  const evaluate = (): void => {
+    return () => setLoading(false);
+  }, [dealerHand, playerHand]);
 
-  };
-
-  const deal = (e: MouseEvent): void => {
+  const handleDealClick = (e: MouseEvent): void => {
     e.preventDefault();
 
-    const shuffled = shuffleDeck(deck);
-    const newPlayerHand = [];
-    const newHouseHand = [];
+    if (loading) return;
 
-    newPlayerHand.push(shuffled.pop() as CardType);
-    newHouseHand.push(shuffled.pop() as CardType);
-    newPlayerHand.push(shuffled.pop() as CardType);
-    newHouseHand.push(shuffled.pop() as CardType);
-
-    setPlayer({ ...player, hand: newPlayerHand });
-    setHouse({ ...house, hand: newHouseHand });
-    setDeck(shuffled);
-
-    evaluate();
+    setLoading(true);
+    deal();
   };
 
   const hit = (e: MouseEvent): void => {
@@ -54,17 +42,21 @@ const Blackjack = () => {
 
   return (
     <main className="flex-grow w-full bg-green-500 p-10">
-      <div className="flex items-center justify-center">
+      <div className="flex items-start justify-center">
         <div className="flex flex-col">
           <section>
-            <p className="text-center">House</p>
+            <p
+              className="py-2 px-6 text-white font-bold bg-black bg-opacity-30 rounded"
+            >
+              Dealer
+            </p>
             <div className="flex mt-6">
               {
-                house.hand.length ? house.hand.map(({ id, rank, suit }, i) => (
+                dealerHand.length ? dealerHand.map(({ id, rank, suit }, i) => (
                   <Card
                     id={id}
                     key={id}
-                    testId={`house-card-${i + 1}`}
+                    testId={`dealer-card-${i + 1}`}
                     rank={rank}
                     suit={suit}
                     flipped={i === 1}
@@ -73,11 +65,11 @@ const Blackjack = () => {
                 )) : (
                   <>
                     <Card
-                      testId="house-placeholder-1"
+                      testId="dealer-placeholder-1"
                       placeholder
                     />
                     <Card
-                      testId="house-placeholder-2"
+                      testId="dealer-placeholder-2"
                       placeholder
                       className="ml-6"
                     />
@@ -89,7 +81,7 @@ const Blackjack = () => {
           <section>
             <div className="flex mt-6">
               {
-                player.hand.length ? player.hand.map(({ id, rank, suit }, i) => (
+                playerHand.length ? playerHand.map(({ id, rank, suit }, i) => (
                   <Card
                     id={id}
                     key={id}
@@ -113,26 +105,34 @@ const Blackjack = () => {
                 )
               }
             </div>
-            <p className="mt-6 text-center">Player</p>
-            <div className="flex justify-center mt-6">
-              <button
-                type="button"
-                className="btn"
-                onClick={hit}
-              >
-                Hit
-              </button>
-              <button
-                type="button"
-                className="btn ml-6"
-                onClick={stand}
-              >
-                Stay
-              </button>
-            </div>
+            <p
+              className="mt-6 py-2 px-6 text-white font-bold bg-black bg-opacity-30 rounded"
+            >
+              { playerScore ? `Player: ${playerScore}` : 'Player' }
+            </p>
+            {
+              playerHand.length > 0 && (
+                <div className="flex justify-center mt-6">
+                  <button
+                    type="button"
+                    className="btn w-full"
+                    onClick={hit}
+                  >
+                    Hit
+                  </button>
+                  <button
+                    type="button"
+                    className="btn w-full ml-6"
+                    onClick={stand}
+                  >
+                    Stay
+                  </button>
+                </div>
+              )
+            }
           </section>
         </div>
-        <div className="flex flex-col ml-20">
+        <div className="flex flex-col ml-20 pt-16">
           <Card
             id={uuidv4()}
             testId="deck"
@@ -140,11 +140,19 @@ const Blackjack = () => {
           />
           <button
             type="button"
+            disabled={loading}
             className="btn mt-6"
-            onClick={deal}
+            onClick={handleDealClick}
           >
-            Deal
+            { loading ? 'Dealing...' : 'Deal' }
           </button>
+          { declareWinner() && (
+            <p
+              className="mt-6 py-2 text-center text-white font-bold bg-black bg-opacity-30 rounded"
+            >
+              { declareWinner() }
+            </p>
+          )}
         </div>
       </div>
     </main>
