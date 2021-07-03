@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
 import type { Card } from '../types';
-import { getCardProps } from './card';
+import { buildCardFromHash } from './card';
 
 /**
  * Build deck with specified constructor values
@@ -18,14 +17,12 @@ export const buildDeck = ({ numDecks = 1, includeJokers = false } = {}): Card[] 
     cardHashes.push(...['JOK', 'JOK']);
   }
 
-  const cards = cardHashes.map((hash) => {
-    const id = uuidv4();
-    return getCardProps(id, hash);
-  });
+  const mergedDecks: Card[] = [];
 
-  const mergedDecks = Array(numDecks)
-    .fill([...cards])
-    .reduce((a, b) => a.concat(b));
+  Array.from(Array(numDecks).keys()).forEach(() => {
+    const cards = cardHashes.map((hash) => buildCardFromHash(hash));
+    mergedDecks.push(...cards);
+  });
 
   return mergedDecks;
 };

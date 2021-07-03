@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import type { Card } from '../types';
 
 /**
@@ -31,13 +32,12 @@ export const getCardRank = (cardHash: string): string => {
 };
 
 /**
- * Generate card properties
- * @param {String} id unique identifier
+ * Generate card properties from hash
  * @param {String} cardHash (ex. AS is Ace of Spades, 5D is Five of Diamonds)
  * @returns {Object}
  */
-export const getCardProps = (id: string, cardHash: string): Card => ({
-  id,
+export const buildCardFromHash = (cardHash: string): Card => ({
+  id: uuidv4(),
   hash: cardHash,
   rank: getCardRank(cardHash),
   suit: getCardSuit(cardHash),

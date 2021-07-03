@@ -1,15 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
 import { buildDeck, shuffleDeck } from '../deck';
-
-jest.mock('uuid');
-
-beforeEach(() => {
-  (uuidv4 as jest.Mock).mockImplementation(() => '1234');
-});
-
-afterEach(() => {
-  jest.clearAllMocks();
-});
 
 test('Deck cards has one deck without jokers | when built without passing any args', () => {
   const deck = buildDeck();
@@ -36,11 +25,19 @@ test('Deck cards has six decks without jokers | when passed "numDecks" of six', 
 
 test('Deck cards are in randomized order | when deck is shuffled', () => {
   const deck1 = buildDeck();
-  const deck2 = buildDeck();
+  const deck2 = [...deck1];
 
   expect(deck1).toStrictEqual(deck2);
 
   const shuffledDeck1 = shuffleDeck(deck1);
 
   expect(shuffledDeck1).not.toStrictEqual(deck2);
+});
+
+test('Card ids are unique | when multiple decks are used', () => {
+  const deck = buildDeck({ numDecks: 2 });
+  const cardIds = deck.map(({ id }) => id);
+  const unique = new Set(cardIds);
+
+  expect(unique.size).toEqual(cardIds.length);
 });

@@ -1,8 +1,19 @@
+import { v4 as uuidv4 } from 'uuid';
 import {
   getCardRank,
   getCardSuit,
-  getCardProps,
+  buildCardFromHash,
 } from '../card';
+
+jest.mock('uuid');
+
+beforeEach(() => {
+  (uuidv4 as jest.Mock).mockImplementation(() => '1234');
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 [
   ['2S', 'S'],
@@ -31,10 +42,10 @@ import {
 });
 
 test('Card properties can be extracted from card hash', () => {
-  const twoOfSpades = getCardProps('test', '2S');
+  const twoOfSpades = buildCardFromHash('2S');
 
   expect(twoOfSpades).toEqual({
-    id: 'test',
+    id: '1234',
     hash: '2S',
     rank: '2',
     suit: 'S',
