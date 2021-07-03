@@ -6,6 +6,9 @@ const useBlackjack = () => {
   const [deck, setDeck] = useState<CardType[]>([]);
   const [dealerHand, setDealerHand] = useState<CardType[]>([]);
   const [dealerScore, setDealerScore] = useState<number>(0);
+  const [isDealerTurn, setIsDealerTurn] = useState<boolean>(false);
+  const [isPlayerBusted, setIsPlayerBusted] = useState<boolean>(false);
+  const [isRoundComplete, setIsRoundComplete] = useState<boolean>(false);
   const [playerHand, setPlayerHand] = useState<CardType[]>([]);
   const [playerScore, setPlayerScore] = useState<number>(0);
 
@@ -15,12 +18,21 @@ const useBlackjack = () => {
     setDeck(shuffled);
   }, []);
 
+  useEffect(() => {
+    setIsPlayerBusted(playerScore > 21);
+  }, [playerScore]);
+
+  useEffect(() => {
+    if (isPlayerBusted) {
+      setIsDealerTurn(true);
+    }
+  }, [isPlayerBusted]);
+
   const declareWinner = (): string => {
-    if (playerScore === 0 && dealerScore === 0) return '';
-    if (playerScore === dealerScore) return 'Tie!';
+    if (!isRoundComplete || (playerScore === 0 && dealerScore === 0)) return '';
     if (playerScore === 21) return 'Blackjack! Player wins!';
     if (dealerScore > 21) return 'Dealer busted, Player wins!';
-    if (playerScore > 21) return 'Player busted, Dealer wins!';
+    if (isPlayerBusted) return 'Player busted, Dealer wins!';
     if (playerScore > dealerScore) return 'Player wins!';
     if (dealerScore > playerScore) return 'Dealer wins!';
     return '';
@@ -47,9 +59,6 @@ const useBlackjack = () => {
   };
 
   const deal = (): void => {
-    setPlayerScore(0);
-    setDealerScore(0);
-
     const shuffled = shuffleDeck(deck);
     const newPlayerHand: CardType[] = [];
     const newDealerHand: CardType[] = [];
@@ -64,21 +73,51 @@ const useBlackjack = () => {
     setDeck(shuffled);
   };
 
+  const drawCard = (personEnum: 'player' | 'dealer') => {
+    const nextCard: CardType = deck.pop() as CardType;
+
+    if (personEnum === 'player') {
+      setPlayerHand([...playerHand, nextCard]);
+    } else {
+      setDealerHand([...dealerHand, nextCard]);
+    }
+  };
+
+  const resetGameState = () => {
+    setDealerHand([]);
+    setDealerScore(0);
+    setIsDealerTurn(false);
+    setIsPlayerBusted(false);
+    setIsRoundComplete(false);
+    setPlayerScore(0);
+    setPlayerHand([]);
+  };
+
   return {
     // State
-    deck,
     dealerHand,
     dealerScore,
+    deck,
+    isDealerTurn,
+    isPlayerBusted,
+    isRoundComplete,
     playerHand,
     playerScore,
     // State setters
+    setDealerHand,
     setDealerScore,
+    setDeck,
+    setIsDealerTurn,
+    setIsPlayerBusted,
+    setIsRoundComplete,
+    setPlayerHand,
     setPlayerScore,
     // Functions
     calculateScore,
     deal,
     declareWinner,
-
+    drawCard,
+    resetGameState,
   };
 };
 

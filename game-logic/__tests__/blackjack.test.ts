@@ -55,7 +55,6 @@ const TwoOfSpades = {
 });
 
 [
-  { dealerScore: 21, playerScore: 21, message: 'Tie!' },
   { dealerScore: 22, playerScore: 21, message: 'Blackjack! Player wins!' },
   { dealerScore: 22, playerScore: 10, message: 'Dealer busted, Player wins!' },
   { dealerScore: 20, playerScore: 22, message: 'Player busted, Dealer wins!' },

@@ -6,13 +6,19 @@ import Card from '../components/Card';
 const Blackjack = () => {
   const {
     dealerHand,
+    dealerScore,
+    isDealerTurn,
+    isPlayerBusted,
     playerHand,
     playerScore,
     calculateScore,
+    setDealerScore,
+    setIsDealerTurn,
+    setPlayerScore,
     deal,
     declareWinner,
-    setDealerScore,
-    setPlayerScore,
+    drawCard,
+    resetGameState,
   } = useBlackjack();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,15 +35,22 @@ const Blackjack = () => {
     if (loading) return;
 
     setLoading(true);
+    resetGameState();
     deal();
   };
 
   const hit = (e: MouseEvent): void => {
     e.preventDefault();
+
+    if (!isPlayerBusted) {
+      drawCard('player');
+    }
   };
 
-  const stand = (e: MouseEvent): void => {
+  const stay = (e: MouseEvent): void => {
     e.preventDefault();
+
+    setIsDealerTurn(true);
   };
 
   return (
@@ -50,7 +63,7 @@ const Blackjack = () => {
             >
               Dealer
             </p>
-            <div className="flex mt-6">
+            <div className="flex justify-end mt-6">
               {
                 dealerHand.length ? dealerHand.map(({ id, rank, suit }, i) => (
                   <Card
@@ -79,7 +92,7 @@ const Blackjack = () => {
             </div>
           </section>
           <section>
-            <div className="flex mt-6">
+            <div className="flex justify-end mt-6">
               {
                 playerHand.length ? playerHand.map(({ id, rank, suit }, i) => (
                   <Card
@@ -106,12 +119,13 @@ const Blackjack = () => {
               }
             </div>
             <p
+              data-testid="player-score"
               className="mt-6 py-2 px-6 text-white font-bold bg-black bg-opacity-30 rounded"
             >
-              { playerScore ? `Player: ${playerScore}` : 'Player' }
+              Player
             </p>
             {
-              playerHand.length > 0 && (
+              (playerHand.length > 0 && !isDealerTurn) && (
                 <div className="flex justify-center mt-6">
                   <button
                     type="button"
@@ -123,7 +137,7 @@ const Blackjack = () => {
                   <button
                     type="button"
                     className="btn w-full ml-6"
-                    onClick={stand}
+                    onClick={stay}
                   >
                     Stay
                   </button>
@@ -133,10 +147,18 @@ const Blackjack = () => {
           </section>
         </div>
         <div className="flex flex-col ml-20 pt-16">
+          <div
+            className="py-2 text-center text-white font-bold bg-black bg-opacity-30 rounded"
+          >
+            <p>{`Dealer: ${isDealerTurn ? dealerScore : '-'}`}</p>
+            <p>{`Player: ${playerScore}`}</p>
+            <p>{`Turn: ${isDealerTurn ? 'Dealer' : 'Player'}`}</p>
+          </div>
           <Card
             id={uuidv4()}
             testId="deck"
             flipped
+            className="mt-6"
           />
           <button
             type="button"
