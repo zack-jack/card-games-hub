@@ -71,9 +71,10 @@ const useBlackjack = () => {
   };
 
   const calculateScore = (hand: CardType[]): number => {
+    const handCopy = [...hand];
     if (!hand.length) return 0;
 
-    const newScore = hand
+    const newScore = handCopy
       // hand must be pre-sorted such that Aces are last
       .sort(({ rank }) => {
         if (rank === 'A') return 1;
