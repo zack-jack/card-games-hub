@@ -22,6 +22,10 @@ const useBlackjack = () => {
 
   useEffect(() => {
     setIsPlayerBusted(playerScore > 21);
+
+    if (declareWinner()) {
+      setIsRoundComplete(true);
+    }
   }, [playerScore]);
 
   useEffect(() => {
@@ -37,6 +41,10 @@ const useBlackjack = () => {
 
     if (!isRoundComplete && isDealerTurn && dealerScore < 17) {
       runDealerTurn();
+    }
+
+    if (declareWinner()) {
+      setIsRoundComplete(true);
     }
   }, [dealerScore]);
 

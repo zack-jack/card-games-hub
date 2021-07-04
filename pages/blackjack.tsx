@@ -2,6 +2,7 @@ import { MouseEvent, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useBlackjack from '../game-logic/blackjack';
 import Card from '../components/Card';
+import CardContainer from '../components/CardContainer';
 
 const Blackjack = () => {
   const {
@@ -9,6 +10,7 @@ const Blackjack = () => {
     dealerScore,
     isDealerTurn,
     isPlayerBusted,
+    isRoundComplete,
     playerHand,
     playerScore,
     calculateScore,
@@ -55,12 +57,6 @@ const Blackjack = () => {
     runDealerTurn();
   };
 
-  const cardClassName = (index: number) => {
-    if (index > 3) return 'mt-6 ml-6';
-    if (index > 0) return 'ml-6';
-    return '';
-  };
-
   return (
     <main className="flex-grow w-full bg-green-500 p-10">
       <div className="flex justify-evenly max-w-screen-xl mx-auto">
@@ -80,56 +76,20 @@ const Blackjack = () => {
             >
               Dealer
             </p>
-            <div className="flex flex-wrap justify-end mt-6">
-              {
-                dealerHand?.length ? dealerHand.map(({ id, rank, suit }, i) => (
-                  <Card
-                    id={id}
-                    key={id}
-                    testId={`dealer-card-${i + 1}`}
-                    rank={rank}
-                    suit={suit}
-                    flipped={i === 1 && !isDealerTurn}
-                    className={cardClassName(i)}
-                  />
-                )) : (
-                  [1, 2, 3, 4].map((item) => (
-                    <Card
-                      key={`dealer-placeholder-${item}`}
-                      testId={`dealer-placeholder-${item}`}
-                      placeholder
-                      className={`${item > 1 ? 'ml-6' : ''}`}
-                    />
-                  ))
-                )
-              }
-            </div>
+            <CardContainer
+              cards={dealerHand}
+              flippedIndices={!isDealerTurn ? [1] : []}
+              name="dealer"
+              className="mt-6"
+            />
           </section>
           <div className="hairline hairline--light mt-8" />
           <section>
-            <div className="flex flex-wrap justify-end mt-8">
-              {
-                playerHand?.length ? playerHand.map(({ id, rank, suit }, i) => (
-                  <Card
-                    id={id}
-                    key={id}
-                    testId={`player-card-${i + 1}`}
-                    rank={rank}
-                    suit={suit}
-                    className={cardClassName(i)}
-                  />
-                )) : (
-                  [1, 2, 3, 4].map((item) => (
-                    <Card
-                      key={`player-placeholder-${item}`}
-                      testId={`player-placeholder-${item}`}
-                      placeholder
-                      className={`${item > 1 ? 'ml-6' : ''}`}
-                    />
-                  ))
-                )
-              }
-            </div>
+            <CardContainer
+              cards={playerHand}
+              name="player"
+              className="mt-8"
+            />
             <p
               data-testid="player-score"
               className="mt-6 py-2 px-6 text-white text-center font-bold bg-black bg-opacity-30 rounded"
@@ -161,7 +121,7 @@ const Blackjack = () => {
             { loading ? 'Dealing...' : 'Deal' }
           </button>
           {
-            (playerHand?.length > 0 && !isDealerTurn) && (
+            (playerHand?.length > 0 && !isDealerTurn && !isRoundComplete) && (
               <>
                 <button
                   type="button"
