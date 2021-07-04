@@ -1,4 +1,4 @@
-.home-card {
+.home-tile {
   @apply flex items-center w-full h-full bg-white rounded-lg shadow-md border border-dashed border-transparent cursor-pointer;
   transition: all .2s ease;
 
@@ -7,11 +7,11 @@
   }
 }
 
-.home-card__title {
+.home-tile__title {
   @apply block w-full h-full px-8 py-6 capitalize;
 }
 
-.home-card.disabled,
-.home-card.disabled > a {
+.home-tile.disabled,
+.home-tile.disabled > a {
   @apply cursor-not-allowed;
 }
