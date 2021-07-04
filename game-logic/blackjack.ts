@@ -51,10 +51,10 @@ const useBlackjack = () => {
   };
 
   const declareWinner = (): string => {
-    if (playerScore === 21) return 'Blackjack! Player wins!';
-    if (dealerScore === 21) return 'Blackjack! Dealer wins!';
+    if (playerScore === 21 && dealerScore !== 21) return 'Blackjack! Player wins!';
     if (isPlayerBusted) return 'Player busted, Dealer wins!';
     if (!isRoundComplete || (playerScore === 0 && dealerScore === 0)) return '';
+    if (dealerScore === 21 && playerScore !== 21) return 'Blackjack! Dealer wins!';
     if (dealerScore > 21) return 'Dealer busted, Player wins!';
     if (playerScore === dealerScore) return 'Tie!';
     if (playerScore > dealerScore) return 'Player wins!';
@@ -113,8 +113,8 @@ const useBlackjack = () => {
     setIsDealerTurn(false);
     setIsPlayerBusted(false);
     setIsRoundComplete(false);
-    setPlayerScore(0);
     setPlayerHand([]);
+    setPlayerScore(0);
   };
 
   return {

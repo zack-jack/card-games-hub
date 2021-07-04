@@ -7,7 +7,7 @@ const AppHeader = () => {
 
   return (
     <nav className="w-full px-10 py-5 shadow z-10">
-      <ul className="flex text-center">
+      <ul className="flex max-w-screen-xl mx-auto text-center">
         <li>
           <Link href="/">
             <a className="font-bold">Card Games Hub</a>

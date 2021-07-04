@@ -55,17 +55,32 @@ const Blackjack = () => {
     runDealerTurn();
   };
 
+  const cardClassName = (index: number) => {
+    if (index > 3) return 'mt-6 ml-6';
+    if (index > 0) return 'ml-6';
+    return '';
+  };
+
   return (
     <main className="flex-grow w-full bg-green-500 p-10">
-      <div className="flex items-start justify-center">
+      <div className="flex justify-evenly max-w-screen-xl mx-auto">
         <div className="flex flex-col">
-          <section>
+          <div className="w-full h-14 text-center">
+            { declareWinner() && (
             <p
-              className="py-2 px-6 text-white font-bold bg-black bg-opacity-30 rounded"
+              className="py-4 text-gray-800 font-bold bg-white rounded"
+            >
+              { declareWinner() }
+            </p>
+            )}
+          </div>
+          <section className="mt-6">
+            <p
+              className="py-2 px-6 text-white text-center font-bold bg-black bg-opacity-30 rounded"
             >
               Dealer
             </p>
-            <div className="flex justify-end mt-6">
+            <div className="flex flex-wrap justify-end mt-6">
               {
                 dealerHand?.length ? dealerHand.map(({ id, rank, suit }, i) => (
                   <Card
@@ -75,26 +90,24 @@ const Blackjack = () => {
                     rank={rank}
                     suit={suit}
                     flipped={i === 1 && !isDealerTurn}
-                    className={i > 0 ? 'ml-6' : ''}
+                    className={cardClassName(i)}
                   />
                 )) : (
-                  <>
+                  [1, 2, 3, 4].map((item) => (
                     <Card
-                      testId="dealer-placeholder-1"
+                      key={`dealer-placeholder-${item}`}
+                      testId={`dealer-placeholder-${item}`}
                       placeholder
+                      className={`${item > 1 ? 'ml-6' : ''}`}
                     />
-                    <Card
-                      testId="dealer-placeholder-2"
-                      placeholder
-                      className="ml-6"
-                    />
-                  </>
+                  ))
                 )
               }
             </div>
           </section>
+          <div className="hairline hairline--light mt-8" />
           <section>
-            <div className="flex justify-end mt-6">
+            <div className="flex flex-wrap justify-end mt-8">
               {
                 playerHand?.length ? playerHand.map(({ id, rank, suit }, i) => (
                   <Card
@@ -103,52 +116,29 @@ const Blackjack = () => {
                     testId={`player-card-${i + 1}`}
                     rank={rank}
                     suit={suit}
-                    className={i > 0 ? 'ml-6' : ''}
+                    className={cardClassName(i)}
                   />
                 )) : (
-                  <>
+                  [1, 2, 3, 4].map((item) => (
                     <Card
-                      testId="player-placeholder-1"
+                      key={`player-placeholder-${item}`}
+                      testId={`player-placeholder-${item}`}
                       placeholder
+                      className={`${item > 1 ? 'ml-6' : ''}`}
                     />
-                    <Card
-                      testId="player-placeholder-2"
-                      placeholder
-                      className="ml-6"
-                    />
-                  </>
+                  ))
                 )
               }
             </div>
             <p
               data-testid="player-score"
-              className="mt-6 py-2 px-6 text-white font-bold bg-black bg-opacity-30 rounded"
+              className="mt-6 py-2 px-6 text-white text-center font-bold bg-black bg-opacity-30 rounded"
             >
               Player
             </p>
-            {
-              (playerHand?.length > 0 && !isDealerTurn) && (
-                <div className="flex justify-center mt-6">
-                  <button
-                    type="button"
-                    className="btn w-full"
-                    onClick={hit}
-                  >
-                    Hit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn w-full ml-6"
-                    onClick={stay}
-                  >
-                    Stay
-                  </button>
-                </div>
-              )
-            }
           </section>
         </div>
-        <div className="flex flex-col ml-20 pt-16">
+        <div className="flex flex-col pt-20">
           <div
             className="py-2 text-center text-white font-bold bg-black bg-opacity-30 rounded"
           >
@@ -170,13 +160,26 @@ const Blackjack = () => {
           >
             { loading ? 'Dealing...' : 'Deal' }
           </button>
-          { declareWinner() && (
-            <p
-              className="mt-6 py-2 text-center text-white font-bold bg-black bg-opacity-30 rounded"
-            >
-              { declareWinner() }
-            </p>
-          )}
+          {
+            (playerHand?.length > 0 && !isDealerTurn) && (
+              <>
+                <button
+                  type="button"
+                  className="btn mt-6"
+                  onClick={hit}
+                >
+                  Hit
+                </button>
+                <button
+                  type="button"
+                  className="btn mt-6"
+                  onClick={stay}
+                >
+                  Stay
+                </button>
+              </>
+            )
+          }
         </div>
       </div>
     </main>

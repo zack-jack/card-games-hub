@@ -1,0 +1,8 @@
+.hairline {
+  @apply w-full block bg-black;
+  height: 1px;
+}
+
+.hairline--light {
+  @apply opacity-10;
+}
