@@ -19,6 +19,7 @@ const Blackjack = () => {
     declareWinner,
     drawCard,
     resetGameState,
+    runDealerTurn,
   } = useBlackjack();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -51,6 +52,7 @@ const Blackjack = () => {
     e.preventDefault();
 
     setIsDealerTurn(true);
+    runDealerTurn();
   };
 
   return (
@@ -65,14 +67,14 @@ const Blackjack = () => {
             </p>
             <div className="flex justify-end mt-6">
               {
-                dealerHand.length ? dealerHand.map(({ id, rank, suit }, i) => (
+                dealerHand?.length ? dealerHand.map(({ id, rank, suit }, i) => (
                   <Card
                     id={id}
                     key={id}
                     testId={`dealer-card-${i + 1}`}
                     rank={rank}
                     suit={suit}
-                    flipped={i === 1}
+                    flipped={i === 1 && !isDealerTurn}
                     className={i > 0 ? 'ml-6' : ''}
                   />
                 )) : (
@@ -94,7 +96,7 @@ const Blackjack = () => {
           <section>
             <div className="flex justify-end mt-6">
               {
-                playerHand.length ? playerHand.map(({ id, rank, suit }, i) => (
+                playerHand?.length ? playerHand.map(({ id, rank, suit }, i) => (
                   <Card
                     id={id}
                     key={id}
@@ -125,7 +127,7 @@ const Blackjack = () => {
               Player
             </p>
             {
-              (playerHand.length > 0 && !isDealerTurn) && (
+              (playerHand?.length > 0 && !isDealerTurn) && (
                 <div className="flex justify-center mt-6">
                   <button
                     type="button"

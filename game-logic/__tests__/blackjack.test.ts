@@ -62,13 +62,14 @@ const TwoOfSpades = {
   { dealerScore: 19, playerScore: 18, message: 'Dealer wins!' },
   { dealerScore: 0, playerScore: 0, message: '' },
 ].forEach(({ dealerScore, playerScore, message }) => {
-  test(`With a dealer score of ${dealerScore} and a player score of ${playerScore},
+  test(`Given a dealer score of ${dealerScore} and a player score of ${playerScore},
         message should be ${message || 'empty'}`, () => {
     const { result } = renderHook(() => useBlackjack());
 
     act(() => {
       result.current.setDealerScore(dealerScore);
       result.current.setPlayerScore(playerScore);
+      result.current.setIsRoundComplete(true);
     });
 
     expect(result.current.declareWinner()).toBe(message);

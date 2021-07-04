@@ -1,4 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen,
+} from '@testing-library/react';
 import Blackjack from '../blackjack';
 
 const page = {
@@ -66,7 +68,7 @@ test('Second dealer card that is dealt is flipped', () => {
   expect(screen.queryByTestId(page.dealer.card2)).toHaveClass('card--flipped');
 });
 
-test('Next card is added to player hand | when user clicks Hit button', () => {
+test('Next card is added to player\'s hand | when user clicks Hit button', () => {
   render(<Blackjack />);
 
   fireEvent.click(screen.getByText(page.button.deal));
@@ -77,7 +79,7 @@ test('Next card is added to player hand | when user clicks Hit button', () => {
   expect(screen.getByTestId(page.player.card3)).toBeInTheDocument();
 });
 
-test('Dealer turn starts | when user clicks Stay button', () => {
+test('Dealer\'s turn starts | when user clicks Stay button', () => {
   render(<Blackjack />);
 
   fireEvent.click(screen.getByText(page.button.deal));
@@ -85,4 +87,13 @@ test('Dealer turn starts | when user clicks Stay button', () => {
 
   expect(screen.queryByText(page.turn.player)).not.toBeInTheDocument();
   expect(screen.queryByText(page.turn.dealer)).toBeInTheDocument();
+});
+
+test('Second dealer card is revealed | when it is the dealer\'s turn', () => {
+  render(<Blackjack />);
+
+  fireEvent.click(screen.getByText(page.button.deal));
+  fireEvent.click(screen.getByText(page.button.stay));
+
+  expect(screen.queryByTestId(page.dealer.card2)).not.toHaveClass('card--flipped');
 });

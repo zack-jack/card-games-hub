@@ -18,6 +18,8 @@ const useBlackjack = () => {
     setDeck(shuffled);
   }, []);
 
+  useEffect(() => () => resetGameState(), []);
+
   useEffect(() => {
     setIsPlayerBusted(playerScore > 21);
   }, [playerScore]);
@@ -28,11 +30,33 @@ const useBlackjack = () => {
     }
   }, [isPlayerBusted]);
 
+  useEffect(() => {
+    if (!isRoundComplete && isDealerTurn && dealerScore >= 17) {
+      setIsRoundComplete(true);
+    }
+
+    if (!isRoundComplete && isDealerTurn && dealerScore < 17) {
+      runDealerTurn();
+    }
+  }, [dealerScore]);
+
+  const runDealerTurn = () => {
+    if (dealerScore >= 17) {
+      setIsRoundComplete(true);
+      return;
+    }
+
+    drawCard('dealer');
+    setDealerScore(calculateScore(dealerHand));
+  };
+
   const declareWinner = (): string => {
-    if (!isRoundComplete || (playerScore === 0 && dealerScore === 0)) return '';
     if (playerScore === 21) return 'Blackjack! Player wins!';
-    if (dealerScore > 21) return 'Dealer busted, Player wins!';
+    if (dealerScore === 21) return 'Blackjack! Dealer wins!';
     if (isPlayerBusted) return 'Player busted, Dealer wins!';
+    if (!isRoundComplete || (playerScore === 0 && dealerScore === 0)) return '';
+    if (dealerScore > 21) return 'Dealer busted, Player wins!';
+    if (playerScore === dealerScore) return 'Tie!';
     if (playerScore > dealerScore) return 'Player wins!';
     if (dealerScore > playerScore) return 'Dealer wins!';
     return '';
@@ -118,6 +142,7 @@ const useBlackjack = () => {
     declareWinner,
     drawCard,
     resetGameState,
+    runDealerTurn,
   };
 };
 
