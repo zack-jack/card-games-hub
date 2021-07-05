@@ -1,10 +1,13 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import {
+  MouseEvent, useEffect, useState, ReactElement,
+} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import useBlackjack from '../game-logic/blackjack';
-import Card from '../components/Card';
-import CardContainer from '../components/CardContainer';
+import Link from 'next/link';
+import useBlackjack from '../../game-logic/blackjack';
+import Card from '../../components/Card';
+import CardContainer from '../../components/CardContainer';
 
-const Blackjack = () => {
+const Blackjack = (): ReactElement => {
   const {
     dealerHand,
     dealerScore,
@@ -112,6 +115,9 @@ const Blackjack = () => {
             flipped
             className="mt-6"
           />
+          <Link href="/blackjack/rules">
+            <a className="block mt-6 font-bold text-center text-white">Rules</a>
+          </Link>
           <button
             type="button"
             disabled={loading}

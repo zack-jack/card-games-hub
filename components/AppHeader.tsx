@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 const AppHeader = () => {
   const router = useRouter();
-  const routeName = router.asPath.replace('/', '');
+  const routeName = router.asPath.replace(/\//g, ' ').trim();
 
   return (
     <nav className="w-full px-10 py-5 shadow z-10">

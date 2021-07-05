@@ -1,7 +1,7 @@
 import {
   fireEvent, render, screen,
 } from '@testing-library/react';
-import Blackjack from '../blackjack';
+import Blackjack from '../index';
 
 const page = {
   dealer: {
